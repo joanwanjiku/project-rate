@@ -121,7 +121,7 @@
                             {% endif %}
                         <div class="react" style="justify-content: space-between;">
                             <div class="react">
-                                <p>{{object.comment_set.all | length}} <img src="https://img.icons8.com/metro/26/000000/comments.png"/></a>
+                                <p>{{object.comments.all | length}} <img src="https://img.icons8.com/metro/26/000000/comments.png"/></a>
                                 </p>
                             </div>
                             {% if object.user == user %}
@@ -133,7 +133,7 @@
                         </div>
                         
                         <div class="card-footer">                            
-                            {% for comment in object.comment_set.all %}
+                            {% for comment in object.comments.all %}
                                 <small>{{comment.content}}</small><br>
                             {% endfor %}
                             <form class="form-inline" action="{%url 'addcomment' object.id%}" method="POST">   

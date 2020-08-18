@@ -8,6 +8,8 @@ from rest_framework import viewsets, permissions
 from .serializers import PostSerializer, CommentSerializer
 from .forms import RatingForm
 from django.views.generic.edit import FormMixin
+from django.contrib.auth.models import User
+import math
 
 
 
@@ -15,7 +17,6 @@ from django.views.generic.edit import FormMixin
 def index(request):
     title = 'Home'
     all_posts = Post.get_all_posts()
-   
     context = {
         'posts': all_posts,
     }
@@ -42,9 +43,9 @@ class PostDetailView(FormMixin, DetailView):
             usability += rating.usability        
         
         try:
-            context['design'] = design/len(ratings)
-            context['usability'] = usability/len(ratings)
-            context['content'] = content/len(ratings)
+            context['design'] = math.ceil(design/len(ratings))
+            context['usability'] = math.ceil(usability/len(ratings))
+            context['content'] = math.ceil(content/len(ratings))
         except:
             context['design'] = design
             context['usability'] = usability
@@ -143,10 +144,10 @@ def search_user(request):
 
         context = {
             'user': found_user,
-            'posts': posts
+            'posts': posts,
         }
         
-        return render(request, 'spec_user.html', context)
+        return render(request, 'projects/spec_user.html', context)
     return redirect('welcome')
 
 
