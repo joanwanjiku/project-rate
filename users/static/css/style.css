@@ -14,8 +14,7 @@ h1, h2,h3, h4, h5, h6{
 .login, .register{
     background: white;
     color: black;
-    margin: 2em 0;
-    padding: 2em;
+    margin-top: 1em;    
     
 }
 .react{

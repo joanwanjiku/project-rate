@@ -2,10 +2,8 @@
 {% load crispy_forms_tags %}
 {% block content %}
     <div class="row">
-        <div class="col-sm-6">
-            <img src="../../../media/image.jpg" alt="" style="width: 100%; margin: 2em auto;">
-        </div>
-        <div class="col-sm-6 login">
+        
+        <div class="col-md-6 offset-md-3 login">
             <form action="" method="POST">
                 {% csrf_token %}
                 <div class="form-group">                    
