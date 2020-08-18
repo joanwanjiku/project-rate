@@ -25,8 +25,8 @@ h1, h2,h3, h4, h5, h6{
 .react p:last-child{
     margin-left: 1em;
 }
-.comments{
-    display: none;
+.react small{
+    justify-content: space-between;
 }
 
 .react img{
@@ -38,4 +38,29 @@ h1, h2,h3, h4, h5, h6{
 
 .asteriskField {
     display: none;
+}
+.star-outer{
+    position: relative;
+    display: inline-block;
+}
+
+.star-inner{
+    position: absolute;
+    top: 0;
+    left: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 0;
+}
+.star-outer::before{
+    content: '\f005 \f005\f005\f005\f005';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 800;
+    color: rgb(139, 139, 139);
+}
+.star-inner::before{
+    content: '\f005 \f005\f005\f005\f005';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 800;
+    color: #f8ce0b;
 }
