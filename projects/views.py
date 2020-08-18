@@ -1,11 +1,15 @@
-from django.shortcuts import render, redirect
-from .models import Post, Comment
+from django.shortcuts import render, redirect, reverse
+from .models import Post, Comment, Rating
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from rest_framework import viewsets, permissions
 from .serializers import PostSerializer, CommentSerializer
+from .forms import RatingForm
+from django.views.generic.edit import FormMixin
+
+
 
 # Create your views here.
 def index(request):
@@ -17,8 +21,54 @@ def index(request):
     }
     return render(request, 'welcome.html', context)
 
-class PostDetailView(DetailView):
+@method_decorator(login_required, name='dispatch')
+class PostDetailView(FormMixin, DetailView):
     model = Post
+    template_name = 'projects/post_detail.html'
+    form_class = RatingForm
+
+    def get_success_url(self):
+        return reverse('post-detail', kwargs={'pk': self.object.id})
+
+    def get_context_data(self, **kwargs):
+        context = super(PostDetailView, self).get_context_data(**kwargs)
+        ratings = Rating.get_all_ratings(self.get_object())
+        design = 0
+        content = 0
+        usability = 0
+        for rating in ratings:
+            design += rating.design
+            content += rating.content
+            usability += rating.usability        
+        
+        try:
+            context['design'] = design/len(ratings)
+            context['usability'] = usability/len(ratings)
+            context['content'] = content/len(ratings)
+        except:
+            context['design'] = design
+            context['usability'] = usability
+            context['content'] = content
+        
+        context['ratings'] = len(ratings)
+        context['form'] = RatingForm(initial={'post': self.object})
+        return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        form.instance.post = self.get_object()
+        form.instance.user = self.request.user        
+        form.save()
+        
+        return super(PostDetailView, self).form_valid(form)
+
 
 @method_decorator(login_required, name='dispatch')
 class PostCreateView(CreateView):
@@ -98,6 +148,8 @@ def search_user(request):
         
         return render(request, 'spec_user.html', context)
     return redirect('welcome')
+
+
 
 
 class PostViewSet(viewsets.ModelViewSet):
