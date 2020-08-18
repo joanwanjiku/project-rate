@@ -38,12 +38,15 @@ MODE=config("MODE", default="dev")
 INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'crispy_forms',
+    'projects.apps.ProjectsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    
 ]
 
 MIDDLEWARE = [

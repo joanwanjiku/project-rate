@@ -19,10 +19,17 @@ from users import views as user_views
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework import routers
+
+
+router = routers.DefaultRouter()
+router.register(r'profiles', user_views.ProfileViewSet)
+router.register(r'users', user_views.UserViewSet)
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('v1/',include(router.urls)),
     path('register/',user_views.register, name='register'),
     path('', user_views.welcome, name='welcome'),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),

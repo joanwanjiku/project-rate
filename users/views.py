@@ -2,6 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import SignUpForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.decorators import login_required
+from rest_framework import viewsets, permissions
+from django.contrib.auth.models import User
+from .models import Profile
+from .serializers import ProfileSerializer, UserSerializer
 
 # Create your views here.
 def welcome(request):
@@ -41,5 +45,14 @@ def profile(request):
         'profile_form': pr_form,
     }
     return render(request, 'users/profile.html', content)
+
+class ProfileViewSet(viewsets.ModelViewSet):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    # permission_classes = [permissions.IsAuthenticated]
 
 
