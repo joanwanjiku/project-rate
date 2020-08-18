@@ -6,10 +6,9 @@ from rest_framework import viewsets, permissions
 from django.contrib.auth.models import User
 from .models import Profile
 from .serializers import ProfileSerializer, UserSerializer
+from projects.models import Post
 
 # Create your views here.
-def welcome(request):
-    return render(request, 'users/welcome.html')
 
 def register(request):
     if request.method == 'POST':
@@ -29,6 +28,7 @@ def register(request):
 @login_required
 def profile(request):
     user = request.user
+    posts = Post.objects.filter(user=user.id)
     if request.method == 'POST':
         up_form = UserUpdateForm(request.POST, instance=request.user)
         pr_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
@@ -43,6 +43,7 @@ def profile(request):
     content = {
         'user_form': up_form,
         'profile_form': pr_form,
+        'posts': posts
     }
     return render(request, 'users/profile.html', content)
 
