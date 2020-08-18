@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="row">
+        {% for post in posts %}
+
+        <div class="col-sm-3 mt-1">
+            <div class="card mt-1">
+                <a href="{{post.url}}"><img class="card-img-top mt-1" src="{{post.image_url.url}}" alt="{{post.url}}" title="{{post.url}}" style="height:30vh;"></a>
+                <div class="card-body">
+                    
+                    <img data-toggle="collapse" data-target="#commentSec{{post.id}}" src="https://img.icons8.com/metro/26/000000/comments.png"/></a>
+                    
+                    <p class="card-text" style="height: 6vh;">{{post.desc | truncatewords:10}} <a href="{% url 'post-detail' post.id %}">read more</a></p>
+                    <p><span style="font-weight: bold;">{{post.comment_set.all | length}}</span> Comments</p>
+                    
+                    <div class="card-footer collapse" id='commentSec{{post.id}}'>
+                        
+                        {% for comment in post.comment_set.all %}
+                            <small>{{comment.content}}</small><br>
+                        {% endfor %}                        
+                    </div>
+                    
+                </div>
+            </div>           
+
+        </div>
+        {% endfor %}
+        
+        
+
+    </div>
+{% endblock %}
