@@ -121,8 +121,9 @@
                             {% endif %}
                         <div class="react" style="justify-content: space-between;">
                             <div class="react">
-                                <p>{{object.comments.all | length}} <img src="https://img.icons8.com/metro/26/000000/comments.png"/></a>
-                                </p>
+                                <p>{{object.comments.all | length}} <img src="https://img.icons8.com/metro/26/000000/comments.png"/></a></p>
+                                <p><span style="font-weight: bold;" class="text-danger">{{object.comments.all | length}}&nbsp; &nbsp;</span><img data-toggle="collapse" style="cursor: pointer;" src="https://img.icons8.com/metro/26/000000/comments.png"/></p>
+
                             </div>
                             {% if object.user == user %}
                             <div class="react">
