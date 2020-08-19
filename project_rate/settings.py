@@ -37,7 +37,6 @@ MODE=config("MODE", default="dev")
 # Application definition
 
 INSTALLED_APPS = [
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'users.apps.UsersConfig',
     'crispy_forms',
     'projects.apps.ProjectsConfig',
@@ -52,6 +51,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
