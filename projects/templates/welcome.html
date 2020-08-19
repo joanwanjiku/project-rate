@@ -5,6 +5,7 @@
 
         <div class="col-sm-3 mt-1">
             <div class="card mt-1">
+                <h6 class="text-center text-danger mt-1">{{post.title}}</h6>
                 <a href="{% url 'post-detail' post.id %}"><img class="card-img-top mt-1" src="{{post.image_url.url}}" alt="{{post.url}}" title="{{post.url}}" style="height:30vh;"></a>
                 <div class="card-body">
                     
