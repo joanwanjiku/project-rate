@@ -11,13 +11,14 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
-from pathlib import Path
 import os
 import dj_database_url
 from decouple import config,Csv
+import django_heroku
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
@@ -36,6 +37,7 @@ MODE=config("MODE", default="dev")
 # Application definition
 
 INSTALLED_APPS = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'users.apps.UsersConfig',
     'crispy_forms',
     'projects.apps.ProjectsConfig',
@@ -142,12 +144,16 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'welcome' #yet to be created
+
+django_heroku.settings(locals())
