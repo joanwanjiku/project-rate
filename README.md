@@ -8,6 +8,9 @@ Project_rate enables users to view various projects uploaded other users, rate a
 ### Technologies Used
 - Python, Django, JavaScript, CSS and HTML
 - VS Code.
+### API Endpoints
+1. posts = `https://prj-rate.herokuapp.com/v1/posts`
+2. users = `https://prj-rate.herokuapp.com/v1/users`
 ### Setup Installation
 To run the application:-
 1. Clone the repository to a folder in your machine using `https://github.com:joanwanjiku/project-rate.git`
